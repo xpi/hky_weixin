@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>正在进入户口易分销</title>
+<link href="css/showLoading.css" rel="stylesheet" media="screen" />
+<script src="js/zepto.js"></script>
+
+<script type="text/javascript" src="js/jquery.showLoading.js"></script>
+<script type="text/javascript">
+$('.app-content').showLoading();
+
+
+</script>
+
+</head>
+<body>
+	<div class="app-content"> </div>
+</body>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect";
+window.location.href=url;
+});
+</script>
+</html>

@@ -1,0 +1,16 @@
+<#include "top.html">
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		统计图表</div>
+		<div class="panel-body">
+		<div class="row">
+			<a class="btn" href="charts/index" target="chartbox">总体签单额提成发放状况</a>
+			<a class="btn" href="charts/allpercen" target="chartbox">提成发放状况</a>
+		</div>
+		<iframe name="chartbox" src="charts/${charttype}" style="border:1px solid #eee;width:100%;height:800px;">
+			
+		
+		</iframe>
+	</div>
+</div>
+<#include "bottom.html">

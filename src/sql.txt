@@ -1,0 +1,215 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : canting
+ Source Server Type    : MySQL
+ Source Server Version : 50163
+ Source Host           : localhost
+ Source Database       : muti
+
+ Target Server Type    : MySQL
+ Target Server Version : 50163
+ File Encoding         : utf-8
+
+ Date: 08/04/2015 09:33:32 AM
+*/
+
+SET NAMES utf8;#end#
+SET FOREIGN_KEY_CHECKS = 0;#end#
+
+-- ----------------------------
+--  Table structure for `mt_admin`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_admin`;#end#
+CREATE TABLE `mt_admin` (
+  `admin_user` varchar(255) NOT NULL,
+  `admin_pwd` varchar(255) DEFAULT NULL,
+  `admin_type` smallint(6) DEFAULT NULL,
+  `login_cookie` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`admin_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_admin`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_admin` VALUES ('admin', '*4ACFE3202A5FF5CF467898FC58AAB1D615029441', null, '1438308626636');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_bill`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_bill`;#end#
+CREATE TABLE `mt_bill` (
+  `id` varchar(255) NOT NULL,
+  `client_name` varchar(255) DEFAULT NULL,
+  `count` double DEFAULT NULL,
+  `bman_id` int(11) DEFAULT NULL,
+  `client_phone` varchar(255) DEFAULT NULL,
+  `apply_type` varchar(255) DEFAULT NULL,
+  `sign_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ispay` tinyint(1) DEFAULT '0',
+  `comments` text,
+  PRIMARY KEY (`id`),
+  KEY `bmanfk` (`bman_id`),
+  CONSTRAINT `bmanfk` FOREIGN KEY (`bman_id`) REFERENCES `mt_bman` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_bill`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_bill` VALUES ('1438619343198', '黄晓晓', '31111', '1', '1321321313', '技能入户', '2015-08-04 00:29:03', '0', ''), ('1438619384154', '黄晓晓', '80000', '3', '18888888888', '技能入户', '2015-08-04 00:29:44', '0', ''), ('1438619409283', '黄晓晓', '31111', '6', '1321321313', '技能入户', '2015-08-04 00:30:09', '0', ''), ('1438619910257', '黄晓晓', '31111', '1', '18888888888', '技能入户', '2015-08-04 00:38:30', '0', '');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_bman`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_bman`;#end#
+CREATE TABLE `mt_bman` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) NOT NULL,
+  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `account_num` varchar(512) DEFAULT NULL,
+  `account_type` varchar(255) DEFAULT NULL,
+  `upper` int(255) DEFAULT NULL,
+  `open_id` varchar(255) DEFAULT NULL,
+  `wechat_name` varchar(255) DEFAULT NULL,
+  `prank` int(5) DEFAULT '0',
+  `comments` text,
+  `enter_code` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`,`phone`),
+  UNIQUE KEY `phone` (`phone`) USING BTREE,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_bman`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_bman` VALUES ('1', '林凡', '18825180001', '2015-06-15 08:53:13', '444242422442', '建行', null, 'openid', null, '3', '大时代萨顶顶阿大大声说 ', 'eq0eo3gdc2'), ('3', '锋哥', '18956645454', '2015-06-15 08:56:13', '124242274274', '邮政', '1', '', null, '5', '爱仕达萨达', 'eq0eo3gdc4'), ('5', '李斯', '16666645454', '2015-06-15 08:57:11', '4545742282', '支付宝', '9', 'openid5', 'sacsac', '0', null, 'eq0eo3gdc5'), ('6', '小白白', '15548484348', '2015-06-15 09:02:09', '445442454245', '支付宝', '5', 'openid6', 'sacasc', '0', '', 'eq0eo3gdc6'), ('8', '黄小1', '15548384848', '2015-06-15 09:03:36', '4454424542451', '支付宝1', '1', 'openid8', 'cascasc', '0', '爱仕达萨达a', 'eq0eo3gdc7'), ('9', '黄小2', '15548484341', '2015-06-15 09:03:38', '445442454245', '支付宝112', '3', '', null, '4', null, 'eq0eo3gdc1'), ('13', '小柏', '19999999991', '2015-06-19 21:49:53', '312312312313', '支付宝 1', '1', null, null, '0', null, 'eq0eo3gdc8'), ('15', '小宝', '13333333333', '2015-06-19 21:51:13', '1232131231231', '支付宝', '3', null, null, '0', null, 'eq0eo3gdc9'), ('16', '何以', '19928938411', '2015-06-22 15:26:01', '支付宝', '12312312323', '3', null, null, '0', null, 'eq0eo3gd11'), ('18', '哈哈', '18823949103', '2015-06-22 15:28:16', '312312312313', '支付宝 1', null, null, null, '0', null, 'eq0eo3gd12'), ('20', '踏踏', '13323333333', '2015-06-22 15:29:45', 'asdasd1231231213', '支付宝1', '1', null, null, '0', null, 'eq0eo3gd33'), ('21', '梦林', '18929919291', '2015-08-01 17:06:34', 'asd3qddwed32r', '支付宝1', '6', null, null, '0', null, 'eq0eo3gd55'), ('22', '哈哈', '18839493923', '2015-08-03 00:12:53', '23132223eddss', '支付宝', '1', null, null, '0', null, 'eq0eo3gdch'), ('23', '龙飞', '18827374838', '2015-08-03 11:48:59', '131313133131', '支付宝 1', null, null, null, '0', null, 'k0k7aquu7u'), ('25', '非空', '18888829394', '2015-08-03 11:51:14', '131313131313', '建行', null, null, null, '0', null, 'j0s10eps2d'), ('26', '非能', '18888829391', '2015-08-03 11:51:58', '111212111121', '建行', null, null, null, '0', null, 'wu8dfp43wu'), ('27', '啊能', '18888821391', '2015-08-03 11:52:24', '111212111121', '建行', null, null, null, '0', null, '8021v8y1h7'), ('28', '啊发', '19992939493', '2015-08-03 11:53:06', '13213123213213', '支付宝 1', '26', null, null, '0', null, 'y7k3kcodig');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_conf`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_conf`;#end#
+CREATE TABLE `mt_conf` (
+  `var_name` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_conf`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_conf` VALUES ('lt2', '0.25'), ('eq', '200'), ('bottom', '20000'), ('top', '50000'), ('overcount', '0.75');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_news`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_news`;#end#
+CREATE TABLE `mt_news` (
+  `id` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `content` text,
+  `digest` varchar(255) DEFAULT NULL,
+  `media_id` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `sent_to` varchar(255) DEFAULT NULL,
+  `isread` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `sent_to` (`sent_to`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_news`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_news` VALUES ('1438578707783', '产品目录', '2015-08-03 13:11:47', '<p>产品目录</p><p><br/></p><p><br/></p>', null, null, null, null, '0'), ('1438578783579', '提成方案', '2015-08-03 13:13:03', '<p>方案内容</p>', null, null, null, null, '0'), ('1438578847658', '公司简介', '2015-08-03 13:14:07', '', null, null, null, null, '0'), ('1438589743000', '等级变更提示', '2015-08-03 16:15:43', '根据您部门前三个月的总签单数变动，您的等级由0级变为5级。', null, null, null, '18956645454', '1'), ('1438619343207', '订单添加', '2015-08-04 00:29:03', '您的签单(顾客:黄晓晓)录入', null, null, null, '18825180001', '0'), ('1438619346713', '等级变更提示', '2015-08-04 00:29:06', '根据您部门前三个月的总签单数变动，您的等级由6级变为1级。', null, null, null, '18825180001', '0'), ('1438619384156', '订单添加', '2015-08-04 00:29:44', '您的签单(顾客:黄晓晓)录入', null, null, null, '18956645454', '0'), ('1438619409285', '订单添加', '2015-08-04 00:30:09', '您的签单(顾客:黄晓晓)录入', null, null, null, '15548484348', '0'), ('1438619413086', '等级变更提示', '2015-08-04 00:30:13', '根据您部门前三个月的总签单数变动，您的等级由1级变为2级。', null, null, null, '18825180001', '0'), ('1438619884366', '提成发放通知', '2015-08-04 00:38:04', '您在签单(1438619409283)中的分部拓展提成已发放：100元', null, null, null, '18825180001', '0'), ('1438619910261', '订单添加', '2015-08-04 00:38:30', '您的签单(顾客:黄晓晓)录入', null, null, null, '18825180001', '0'), ('1438619915467', '提成发放通知', '2015-08-04 00:38:35', '您在签单(1438619910257)中的个人签单提成已发放：2500元', null, null, null, '18825180001', '0'), ('1438619940867', '等级变更提示', '2015-08-04 00:39:00', '根据您部门前三个月的总签单数变动，您的等级由2级变为3级。', null, null, null, '18825180001', '0');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_pscope`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_pscope`;#end#
+CREATE TABLE `mt_pscope` (
+  `count` double DEFAULT NULL,
+  `rate` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_pscope`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_pscope` VALUES ('100000', '1.5'), ('200000', '2.1'), ('300000', '3.3');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_rank`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_rank`;#end#
+CREATE TABLE `mt_rank` (
+  `percen` double DEFAULT NULL,
+  `bill_count` int(11) DEFAULT NULL,
+  `rank` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_rank`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_rank` VALUES ('6000', '45', '9'), ('5000', '28', '8'), ('5500', '36', '7'), ('4500', '21', '6'), ('4000', '15', '5'), ('3500', '10', '4'), ('3000', '6', '3'), ('2500', '3', '2'), ('2000', '1', '1');#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  Table structure for `mt_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `mt_record`;#end#
+CREATE TABLE `mt_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bman_id` int(11) DEFAULT NULL,
+  `sbman_id` int(11) DEFAULT NULL,
+  `percen` double(255,0) DEFAULT NULL,
+  `ispay` tinyint(1) DEFAULT '0',
+  `pay_date` timestamp NULL DEFAULT NULL,
+  `bill_id` varchar(255) DEFAULT NULL,
+  `sign_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `account_type` varchar(255) DEFAULT NULL,
+  `account_num` varchar(255) DEFAULT NULL,
+  `percen_type` varchar(128) DEFAULT '签单提成',
+  `record_comment` text,
+  `isread` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pk` (`id`),
+  KEY `fk_bman_id` (`bman_id`),
+  KEY `fk_sbman_id` (`sbman_id`),
+  KEY `fk_bill` (`bill_id`),
+  CONSTRAINT `fk_bill` FOREIGN KEY (`bill_id`) REFERENCES `mt_bill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_bman_id` FOREIGN KEY (`bman_id`) REFERENCES `mt_bman` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_sbman_id` FOREIGN KEY (`sbman_id`) REFERENCES `mt_bman` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9364 DEFAULT CHARSET=utf8;#end#
+
+-- ----------------------------
+--  Records of `mt_record`
+-- ----------------------------
+BEGIN;#end#
+INSERT INTO `mt_record` VALUES ('9351', '1', '1', '2000', '0', null, '1438619343198', '2015-08-04 00:29:03', null, null, '个人签单提成', null, null), ('9352', '1', '1', '7500', '0', null, '1438619343198', '2015-08-04 00:29:03', null, null, '个人加价提成', null, null), ('9353', '3', '3', '3000', '0', null, '1438619384154', '2015-08-04 00:29:44', null, null, '个人签单提成', null, null), ('9354', '3', '3', '7500', '0', null, '1438619384154', '2015-08-04 00:29:44', null, null, '个人加价提成', null, null), ('9355', '1', '3', '200', '0', null, '1438619384154', '2015-08-04 00:29:44', null, null, '分部签单提成', null, null), ('9356', '6', '6', '2000', '0', null, '1438619409283', '2015-08-04 00:30:09', null, null, '个人签单提成', null, null), ('9357', '6', '6', '7500', '0', null, '1438619409283', '2015-08-04 00:30:09', null, null, '个人加价提成', null, null), ('9358', '5', '6', '200', '0', null, '1438619409283', '2015-08-04 00:30:09', null, null, '分部签单提成', null, null), ('9359', '9', '6', '100', '0', null, '1438619409283', '2015-08-04 00:30:09', null, null, '分部拓展提成', null, null), ('9360', '3', '6', '100', '0', null, '1438619409283', '2015-08-04 00:30:09', null, null, '分部拓展提成', null, null), ('9361', '1', '6', '100', '1', '2015-08-04 00:38:04', '1438619409283', '2015-08-04 00:38:04', '建行', '444242422442', '分部拓展提成', '', null), ('9362', '1', '1', '2500', '1', '2015-08-04 00:38:35', '1438619910257', '2015-08-04 00:38:35', '建行', '444242422442', '个人签单提成', '', null), ('9363', '1', '1', '2341', '0', null, '1438619910257', '2015-08-04 00:38:30', null, null, '个人加价提成', null, null);#end#
+COMMIT;#end#
+
+-- ----------------------------
+--  View structure for `mt_bill_view`
+-- ----------------------------
+DROP VIEW IF EXISTS `mt_bill_view`;#end#
+CREATE `mt_bill_view` AS select `m1`.`id` AS `id`,`m1`.`client_name` AS `客户姓名`,`m1`.`count` AS `签单金额`,`m2`.`name` AS `签单人`,`m1`.`client_phone` AS `顾客联系方式`,`m1`.`sign_date` AS `签单日期`,`m1`.`apply_type` AS `入户类型`,`m1`.`comments` AS `备注`,if(`m1`.`ispay`,'已完全发放','未完全发放') AS `发放提成状态` from (`mt_bill` `m1` left join `mt_bman` `m2` on((`m2`.`id` = `m1`.`bman_id`)));#end#
+
+-- ----------------------------
+--  View structure for `mt_record_view`
+-- ----------------------------
+DROP VIEW IF EXISTS `mt_record_view`;#end#
+CREATE  `mt_record_view` AS select `m1`.`id` AS `id`,`m1`.`bill_id` AS `编号`,`m1`.`percen` AS `提成奖金`,`m1`.`percen_type` AS `提成类型`,`m1`.`account_type` AS `收款账户类型`,`m1`.`account_num` AS `收款账户名称`,`m1`.`sign_date` AS `签单时间`,`m1`.`pay_date` AS `提成发放时间`,`m2`.`name` AS `提成接收人`,`m3`.`name` AS `签单人`,if(`m1`.`ispay`,'已发放','未发放') AS `发放提成状态`,`m1`.`record_comment` AS `备注` from ((`mt_record` `m1` left join `mt_bman` `m2` on((`m2`.`id` = `m1`.`bman_id`))) left join `mt_bman` `m3` on((`m3`.`id` = `m1`.`sbman_id`)));#end#
+
+SET FOREIGN_KEY_CHECKS = 1;#end#

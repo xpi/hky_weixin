@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../css/app.min.css">
+<link rel="stylesheet" href="../css/main.css">
+<link href="css/showLoading.css" rel="stylesheet" media="screen" />
+<link href="css/zepto.mdater.css" rel="stylesheet" media="screen" />
+<link href="css/font-awesome.min.css" rel="stylesheet" media="screen" />
+<style>
+/* TODO */
+</style>
+</head>
+
+<body>
+
+	
+	<div class="app-page" data-page="tops-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">${current_y}排名状况</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="percen-page">
+			<div class="app-section">
+				<table class="toptype">
+					<tr>
+						<td class="app-button" id="percentop">奖金实力榜</td>
+						<td class="app-button" id="billtop">签单实力榜</td>
+					</tr>
+				</table>
+			</div>
+			<div class="app-section">
+				<ul id="toplist" class="app-list">
+
+				</ul>
+
+			</div>
+		</div>
+	</div>
+	<script src="js/zepto.js"></script>
+	<script src="js/zepto.mdater.js"></script>
+	<script type="text/javascript" src="js/jquery.showLoading.js"></script>
+	<script src="../js/app.min.js"></script>
+	<script>
+	
+
+	
+		<#include "js/tops.handler.js">	
+		
+	
+		
+ 		App.load("tops-page");
+	
+		
+		/* $(".app-content").showLoading(
+			{	}
+		);
+		$(".loading-indicator").on("click",function(){
+			$('.app-content').hideLoading();
+		}) */
+	</script>
+</body>
+</html>

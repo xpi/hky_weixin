@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../css/app.min.css">
+<link rel="stylesheet" href="../css/main.css">
+<link href="css/showLoading.css" rel="stylesheet" media="screen" />
+<link href="css/zepto.mdater.css" rel="stylesheet" media="screen" />
+<link href="css/font-awesome.min.css" rel="stylesheet" media="screen" />
+<style>
+/* TODO */
+</style>
+</head>
+
+<body>
+
+	<div class="app-page" data-page="news-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">最新政策</div>
+			<div class="app-button right" data-target="news-page">主页</div>
+		</div>
+		<div class="app-content" id="">
+			<div class="app-section">
+				<ul class="app-list" id="newslist">
+					<li id="morenews" next="1" onclick="morenews(this,'listnews')">更多</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="app-page" data-page="newsdetails-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">政策内容</div>
+			<div class="app-button right" data-target="news-page">主页</div>
+		</div>
+		<div class="app-content">
+			<p class="app-section">
+				<span style="font-size:8px;" class="newsdate"></span>
+			</p>
+			<div class="app-section content"></div>
+		</div>
+	</div>
+	<div class="app-page" data-page="newsdetailsfixed-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">消息内容</div>
+			<div class="app-button right" data-target="news-page">主页</div>
+		</div>
+		<div class="app-content">
+			<p class="app-section">
+				<span style="font-size:8px;" class="newsdate"></span>
+			</p>
+			<div class="app-section content"></div>
+		</div>
+	</div>
+	<script src="js/zepto.js"></script>
+	<script src="js/zepto.mdater.js"></script>
+	<script type="text/javascript" src="js/jquery.showLoading.js"></script>
+	<script src="../js/app.min.js"></script>
+	<script>
+	
+		var next=1;
+		var morenews = function(obj,listtype){
+			$('.app-content').showLoading();
+			$.ajax({
+				dataType:"json",
+				url:"bman/"+listtype,
+				data:{next:next},
+				success:function(data){
+					if(data.length==0){
+					$("#morenews").remove();
+					
+					}
+					for(var i in data){
+						$(obj).before("<li><a class='app-button' onclick='newsdetails("+data[i].id+")'>"+data[i].title+"</a></li>");
+					}
+					
+					next = parseInt($("#morenews").attr("next"));
+					$("#morenews").attr("next",next+1);
+					$('.app-content').hideLoading();
+				}
+			});
+		};
+		
+		var newsdetails = function(news_id){
+		   $('.app-content').showLoading();
+		   $.ajax({
+				dataType:"json",
+				url:"bman/getpublicnews",
+				data:{news_id:news_id},
+				success:function(data){
+					App.load("newsdetails-page",data)
+					$('.app-content').hideLoading();
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});
+		}
+		
+		var initnews = function(page,next,listtype){
+			$(page).find('.app-content').showLoading();
+			$.ajax({
+				dataType:"json",
+				url:"bman/"+listtype,
+				data:{next:next},
+				success:function(data){
+					
+					for(var i in data){
+						$(page).find("#morenews").before("<li><a class='app-button' onclick='newsdetails("+data[i].id+")'>"+data[i].title+"</a></li>");
+					}
+					next = parseInt($(page).find("#morenews").attr("next"));
+					$(page).find("#morenews").attr("next",next+1);
+					$(page).find('.app-content').hideLoading();
+				},
+				error:function(err){
+				console.log(err);
+				}
+			});
+		}
+		
+		App.controller('news-page',function(page){
+			initnews(page,0,"listnews");
+		})		
+	
+		App.controller('newsdetails-page',function(page,args){
+			$(page).find(".newsdate").before(args.title);
+			$(page).find(".newsdate").append("<br>"+args.date);
+			$(page).find(".content").append(args.content);
+			
+		});
+		
+		App.controller('newsdetailsfixed-page',function(page,args){
+		   $(page).find('.app-content').showLoading();
+		   $.ajax({	
+				dataType:"json",
+				url:"bman/getpublicnews",
+				data:{news_id:'${news_id!}'},
+				success:function(data){
+					$(page).find(".newsdate").before(data.title);
+					$(page).find(".newsdate").append("<br>"+data.date);
+					$(page).find(".content").append(data.content);
+					$(page).find('.app-content').hideLoading();
+				}
+			
+			});
+		});
+		
+ 		App.load("${page?default('news-page')}");
+	
+		<#if page??>
+				App.addToStack(0, ['news-page']);
+		</#if>
+	
+		/* $(".app-content").showLoading(
+			{	}
+		);
+		$(".loading-indicator").on("click",function(){
+			$('.app-content').hideLoading();
+		}) */
+	</script>
+</body>
+</html>

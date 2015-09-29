@@ -1,0 +1,183 @@
+<#include "top.html">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a>
+	</li>
+	<li class="active">签单管理</li>
+	</li>
+</ol>
+<div class="col-md-12 col-sm-12 margin-bottom-30">
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			<div class="panel panel-primary">
+				<div class="panel-heading">筛选条目</div>
+				<div class="panel-body">
+					<form method="post" role="form" id="templatemo-preferences-form"
+						action="billpercen">
+
+						<div class="row">
+							<div class="col-md-2 margin-bottom-15">
+								<label for="bman_id" class="control-label">提成人</label> <input
+									type="text" class="form-control"  value ="${bman_name?default('')}" id="bman_name"
+									name="bman_name">
+							</div>
+							<div class="col-md-2 margin-bottom-15">
+								<label for="sbman_name" class="control-label">签单人</label> <input
+									type="text" class="form-control" value ="${sbman_name?default('')}"  id="sbman_name"
+									name="sbman_name""
+									>
+
+							</div>
+							<div class="col-md-4 margin-bottom-15">
+								<label for="ispay" class="control-label">是否已提成</label> <input
+									id="ispay" type="radio" name="ispay" value="${ispay?default('1')}"
+									 />是 <input type="radio" name="ispay"
+									value="${ispay?default('0')}" />否
+							</div>
+
+
+						</div>
+						<div class="row">
+
+							<div class="col-md-6 margin-bottom-15">
+								<label for="range" class="control-label">金额范围</label> <input 
+									type="text" class="" id="range" value="${cstart}" name="cstart""
+									 style="width:80px;"><span>至</span><input style="width:80px;"
+									type="text" class="" value = "${cend}"name="cend""
+									>
+							</div>
+						</div>
+						<div class="row templatemo-form-buttons">
+							<div class="col-md-12">
+								<input type="submit" class="" value="查询">
+								<input type="reset" value="重置" >
+							</div>
+						</div>
+						<#if addmsg?exists>
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert">
+								<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+							</button>
+							${addmsg}
+						</div>
+						</#if>
+					</form>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading"><a style="color:#eee;" href="showrecorddetails?table_name=mt_bill_view&id=${bill_id!}&page_name=签单查看&page=bills">（签单人:${sbman_name!}，单号${bill_id!}）</a>提成列表</div>
+				<div class="panel-body">
+					<table class="table table-striped table-hover table-bordered sort"
+						id="sort">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>签单编号</th>
+								<th>提成人</th>
+								<th>签单人</th>
+								<th>奖金</th>
+								<th>签单金额</th>
+								<th>签单日期</th>
+								<th>提成类型</th>
+
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="members">
+							<tr class="member">
+								<td><a class="id"></a></td>
+								<td><a class="bill_id"></a></td>
+								<td><a class="bman_name"></a></td>
+								<td><a class="sbman_name"></a></td>
+								<td class="percen"></td>
+								<td class="count"></td>
+								</td>
+								<td class="sign_date"></td>
+								<td class="percen_type"></td>
+								<td class="func"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<script src="js/tablesort.min.js"></script>
+			<script>
+				new Tablesort(document.getElementById("sort"), {
+					descending : false
+				});
+			</script>
+			<ul class="pagination pull-left">
+				<li id="pagepre"><a
+					href="?from=${pre}&sbman_name=${sbman_name?if_exists}&bman_name=${bman_name?if_exists}&cstart=${cstart?if_exists}&cend=${cend?if_exists}&ispay=${ispay?if_exists}"><</a>
+				</li>
+				<li id="pagepre"><a href=>第${currentpage}页</a></li>
+				<li id="pagenext"><a href="?from=${next}&sbman_name=${sbman_name?if_exists}&bman_name=${bman_name?if_exists}&cstart=${cstart?if_exists}&cend=${cend?if_exists}&ispay=${ispay?if_exists}">></a></li>
+			</ul>
+		</div>
+
+	</div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+	var current = 0;
+	
+	bindJsonToDom("#members", ".member", ${members},function(attr,obj,row){
+				if(attr==="ispay"&&obj[attr]==0){
+					row.addClass("success");
+					row.find(".func").append("<a href='paypercen?record_id="+obj["id"]+"' class=''>发放提成</a>")
+				}
+				//showrecorddetails?table_name=mt_record_view&id=9333&page_name=提成记录&page=percenbill
+				row.find(".id").attr("href","showrecorddetails?table_name=mt_record_view&id="+obj["id"]+"&page_name=提成记录&page=percenbill");
+				row.find(".bman_name").attr("href","bmaninfo?bman_id="+obj["bman_id"]);
+				
+	});
+	if($("#members").children().length<15){
+		$("#members").after("<tr><td style='text-align:center;color:#666' colspan='7'>最后一页</td></tr>");
+		$("#pagenext").remove();
+	}
+	
+	var editfunc=function(){
+		var oldpercen = $(this).text();
+		$(this).text("");
+		$(this).append("<input class='percentxt' type='text'>")
+		$(this).unbind("click"); //移除click
+		$(this).find(".percentxt").val(oldpercen);
+		$(this).find(".percentxt").focus();
+		var self = this;
+		
+		$(this).find(".percentxt").on("blur",function(){
+			var id = $(self).parent().find(".id").text();
+			var newpercen =$(self).find(".percentxt").val();
+		 if(oldpercen!=newpercen){
+			$.ajax({  
+       		 type:"post",  
+       		  data:{id:id,percen:newpercen},
+      		  url:"updatepercen",  
+      		  dataType:"json",  
+       		  success:function(data){
+       		   $(self).find(".percentxt").remove();
+               $(self).text(newpercen);	
+               $(self).on("click",editfunc);
+               alert("更改成功");
+       		  },
+       		  error:function(data){
+       		   alert("更改失败，请输入正整数");
+       		  }
+   			 });  
+   			}else{
+   			  $(self).find(".percentxt").remove();
+               $(self).text(newpercen);	
+               $(self).on("click",editfunc);
+   			}
+			
+		}); 
+	}
+	$(".percen").on("click",editfunc);
+
+</script>
+
+<#include "bottom.html">
+

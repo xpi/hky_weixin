@@ -1,0 +1,271 @@
+<#include "top.html">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li class="active">签单管理</li>
+	<li class="active">添加签单</li>
+	
+	</li>
+</ol>
+<div class="panel panel-primary">
+				<div class="panel-heading">添加签单</div>
+				<div class="panel-body">
+					<form method="post" role="form" id="templatemo-preferences-form"
+						action="addSignBill">
+
+						<div class="row">
+
+							<div class="col-md-4 margin-bottom-15">
+								<label for="client_name" class="control-label">顾客姓名</label> <input
+									type="text" class="form-control" name="client_name"
+									placeholder="必填" required>
+							</div>
+							<div class="col-md-2 margin-bottom-15">
+								<label for="count" class="control-label">签单金额</label> <input
+									type="text" class="form-control" name="count" id="count"
+									placeholder="必填" pattern="[0-9\.]+" required>
+							</div>
+							<div class="col-md-2 margin-bottom-15">
+								<label for="count" class="control-label">加价金额</label> <input
+									type="text" class="form-control" name="overcount"
+									id="overcount" value="0" placeholder="必填" pattern="[0-9]+"
+									required>
+							</div>
+							<div class="col-md-3 margin-bottom-15">
+								<label for="count" class="control-label">顾客手机</label> <input
+									type="text" class="form-control" name="client_phone"
+									pattern="[0-9]+" placeholder="必填" required>
+							</div>
+						</div>
+						<div class="row">
+
+							<div class="col-md-3 margin-bottom-15">
+								<label for="customer_type" class="control-label">入户方式</label> <select
+									class="form-control" name="apply_type" id="select_type"
+									required>
+									<option>技能入户</option>
+									<option>积分入户入户</option>
+									<option>应届毕业生入户</option>
+									<option>学历入户</option>
+									<option>自定义</option>
+								</select>
+
+								<div>
+									<input type="text" placeholder="输入自定义类型" id="customer_type"
+										hidden>
+								</div>
+							</div>
+							<div class="col-md-3 margin-bottom-15">
+								<label for="count" class="control-label" id="upper_name">经办人手机</label>
+								<input type="text" class="form-control" id="bman_phone"
+									name="bman_phone" placeholder="必填" required>
+							</div>
+
+							<div class="col-md-2 margin-bottom-15">
+								<label for="count" class="control-label">姓名搜索</label> <input
+									type="text" class="form-control" id="name_key"
+									placeholder="姓名关键字">
+
+							</div>
+							<div class="col-md-4 margin-bottom-15">
+								<label for="count" class="control-label">选择列表</label>
+								<ul id="phone_choose" style="border:1px solid #ddd">
+
+
+								</ul>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+
+							<div class="col-md-3 margin-bottom-15">
+								<label for="count" class="control-label">奖金提成(先输入经办人手机)</label>
+
+								<input type="text" class="form-control" name="percen"
+									pattern="[0-9]+" disabled required>
+
+							</div>
+							<div class="col-md-9 margin-bottom-15">
+								<label class="control-label" id="uppers">奖金链：</label>
+								<table class="table-bordered table">
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>等级</th>
+											<th>提成金额</th>
+											<th>提成类型</th>
+										</tr>
+									</thead>
+									<tbody id="uppers_table">
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<input id="bman_id" type="text" name="bman_id" hidden>
+						<hr>
+						<div class="row">
+
+							<div class="col-md-6 margin-bottom-15">
+								<label>备注</label>
+								<div>
+									<textarea name="comments" cols="50" rows="5"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row templatemo-form-buttons">
+							<div class="col-md-12">
+								<button type="submit" id="" class="btn btn-primary">添加</button>
+								<button type="reset" class="btn btn-default">重置</button>
+							</div>
+						</div>
+						<#if addmsg?exists>
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert">
+								<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+							</button>
+							${addmsg}
+						</div>
+						</#if>
+					</form>
+				</div>
+			</div>
+
+<script src="js/main.js"></script>
+
+<script id="upper_row" type="text/template">  
+          <% 	var percenbman_ids="";
+				var keys = {};
+			for(var i=0; i<uppers.length; i++){ 
+					var k = "k"+ uppers[i].bman_id;
+					keys[k]= uppers[i].bman_id;
+			
+					var upper =uppers[i];
+			
+			%>  
+          <tr>  
+			<td><%= upper.name %></td> 
+			<td><%= upper.rank %></td> 
+			<td><input type="text" name="uppercen_<%=upper.bman_id%>" value="<%=upper.percen%>" pattern="[0-9\.]+" required></td>
+			<td><input type="text" name="percentype_<%=upper.bman_id%>" value="<%=upper.percentype%>" name></td>	
+			</tr>  
+          <% }
+			for(ki in keys){ 
+				percenbman_ids+=keys[ki]+",";
+			}
+			  percenbman_ids=percenbman_ids.substr(0,percenbman_ids.length-1);
+		  %>  
+			
+		  <tr><td><input type="text" value="<%=percenbman_ids%>"  name="percenbman_ids" hidden required></td><td></td><td></td><td></td><td></td> </tr>
+			
+</script>
+<script>
+	
+	
+	
+	//检查签单人手机正确与否
+	var checkphone = function(phone){
+		var money_count  = $("#count").val();
+		if(!money_count){
+				alert("请输入金额");
+				$("#bman_phone").val("");
+				$("#count").focus();
+				return;
+		}
+		$.get("getuppercenbyphone", {	
+			phone : phone,count:$("#count").val(),overcount:$("#overcount").val()
+		}, function(data) {
+			if (data.errorMsg) {
+				alert(data.errorMsg);
+				$("#bman_phone").val("");
+				$("input[name=percen]").val("");
+			} else {
+				var phoneNum = 	$("input[name=bman_phone]").val();
+				if(!phoneNum){
+					alert("请输入经办人手机号码");
+					$("input[name=percen]").val("");
+				}else{
+					var money_count  = $("#count").val();
+					var uppers_row = new EJS({text:$("#upper_row").html()}).render({ uppers: data["uppers"] });  
+					$("#uppers_table").html(uppers_row);
+					$.getJSON("computepercen",{bman_id:data.id,count:money_count},function(data){
+						$("input[name=percen]").val(data["percen"]);
+					})
+					
+				}
+				$("#upper_id").val(data.id);
+				$("#upper_name").text("经办人手机("+data.name+")");
+				$("#bman_id").val(data.id)
+				$("#upper_id").attr("disabled", false);
+				
+				
+			}
+			$("#submitbtn").attr("disabled", false);
+		});
+	}
+	//选择号码
+	var selectphone = function(obj){
+		var phone = $(obj).find(".phone").text();
+		$("#bman_phone").val(phone);
+		checkphone(phone);
+	}
+	
+	//按名字关键字查询号码
+	$("#name_key").bind("input propertychange",function(){
+			if($("#name_key").val()==""){
+				return;
+			}
+			$.ajax({
+			url:"findbman",
+			dataType:"json",
+			data:{namekey:$(this).val()},
+			success:function(data){
+				var aphtml ="";
+				for(k in data){
+					var name = data[k]["name"];
+					var phone = data[k]["phone"];
+					aphtml += '<li onclick="selectphone(this)"><a class="phone" >'+phone+'</a><span>('+name+')</span></li>';
+				}
+				$("#phone_choose").html("");
+				$("#phone_choose").append(aphtml)
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		
+			}) 
+	});
+	var clearphone = function(){
+		$("#bman_phone").val("");
+		$("input[name=percen]").val("");
+		$("#uppers_table").html("");
+	}
+	$("#count").on("focus",function(){
+		clearphone();
+	})
+	$("#overcount").on("focus",function(){
+		clearphone();
+	})
+	
+	$("#bman_phone").on("blur", function() {
+		var phone = $(this).val();
+		if (phone == "") {
+			$("#submitbtn").attr("disabled", false);
+			return;
+		}
+		checkphone(phone);
+	})
+	
+	$("#select_type").on("change",function(){
+		if($("#select_type").val()=="自定义"){
+			$("#customer_type").show();
+			$("#customer_type").attr("name","apply_type");
+			$("#select_type").remove();
+		}
+	})
+
+</script>
+
+<#include "bottom.html">
+

@@ -1,0 +1,55 @@
+<#include "top.html">
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span style="color:Red">${bman_name!}</span>的个人额业绩月况(万元) <i
+			class="fa fa-database" style="color:red"></i>已付款 <i
+			class="fa fa-database" style="color:#666"></i>未付款
+
+	</div>
+	<canvas id="templatemo-bar-chart" width="1000"></canvas>
+</div>
+
+<script>
+	//
+	var datas = ${data};
+	var tdata = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+	var tdata2 = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+	console.log(datas);
+	for (i in datas) {
+		var mon = parseInt(datas[i]["tmonth"]);
+		tdata[mon - 1] = datas[i]["paypercen"];
+		tdata2[mon - 1] = datas[i]["unpaypercen"];
+	}
+	console.log(tdata2);
+
+	for (i in tdata) {
+		tdata[i] = tdata[i] / 10000;
+		tdata2[i] = tdata2[i] / 10000;
+	}
+
+	var lineChartData = {
+		labels : [ "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月",
+				"11月", "12月" ],
+		datasets : [ {
+			fillColor : "red",
+			data : tdata
+		}, {
+			fillColor : "#666",
+			data : tdata2
+		} ]
+
+	}
+	window.onload = function() {
+		// lineChartData
+		var ctx_bar = document.getElementById("templatemo-bar-chart")
+				.getContext("2d");
+
+		window.myBar = new Chart(ctx_bar).Bar(lineChartData, {
+			responsive : true
+		});
+	}
+</script>
+
+<#include "bottom.html">

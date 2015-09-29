@@ -1,0 +1,175 @@
+<#include "top.html">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li><a href="#">成员查看</a></li>
+	<li class="active">姓名查询</li>
+	</li>
+</ol>
+<div class="col-md-12 col-sm-12 margin-bottom-10">
+	<div class="panel panel-primary">
+		<div class="panel-heading">添加分销商</div>
+		<div class="panel-body">
+			<form role="form" id="templatemo-preferences-form" action="addbman">
+				<div class="row">
+					<div class="col-md-3 margin-bottom-15">
+						<label for="firstName" class="control-label">姓名</label> <input
+							type="text" class="form-control" name="name" required>
+					</div>
+					<div class="col-md-3 margin-bottom-15">
+						<label for="firstName" class="control-label">手机</label> <input
+							type="text" id="phonetxt" class="form-control" name="phone" required>
+					</div>
+					<div class="col-md-3 margin-bottom-15">
+						<label for="firstName" class="control-label">收款账户类型</label> <input
+							type="text" class="form-control" name="account_type" required>
+					</div>
+					<div class="col-md-3 margin-bottom-15">
+						<label for="firstName" class="control-label">收款账户号码</label> <input
+							type="text" class="form-control" name="account_num" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 margin-bottom-15">
+						<label for="firstName" class="control-label">分销商类型</label> <select
+							id="bmantype" class="form-control">
+							<option>部长</option>
+							<option>分部</option>
+						</select>
+					</div>
+					<div class="col-md-3 margin-bottom-15" id="spper" hidden>
+						<label for="firstName" class="control-label" id="uppertitle" >输入部长手机号码</label> <input
+							id="upper_phone" type="text" class="form-control"
+							 placeholder="输入部长手机号码" pattern="[0-9]{11,}"  >
+						
+					</div>
+					<input id="upper_id" type="text" 
+							name="upper_id" disabled hidden>
+							
+					<div class="col-md-2 margin-bottom-15 namekeyword" style="display:none">
+								<label for="count" class="control-label">姓名搜索</label> <input
+									type="text" class="form-control" id="name_key"
+									placeholder="姓名关键字">
+
+					</div>
+					<div class="col-md-4 margin-bottom-15 phonelist" style="display:none">
+						<label for="count" class="control-label">选择列表</label>
+						<ul id="phone_choose" style="border:1px solid #ddd">
+
+
+						</ul>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-3  margin-top-20">
+						<button type="submit" id="submitbtn" class="btn btn-primary">添加</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12 col-sm-12 margin-bottom-30">
+	<div class="panel panel-primary">
+		<div class="panel-heading">搜索</div>
+		<div class="panel-body">
+			<form role="form" id="templatemo-preferences-form" action="">
+
+				<div class="col-md-6 margin-bottom-15">
+					<label for="firstName" class="control-label">姓名关键字</label> <input
+						type="text" class="form-control" name="namekey">
+					<div class="row  margin-top-20">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary">搜索</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<#include "mstable.html">
+
+		
+		</div>
+
+	</div>
+</div>
+
+<script src="js/checkutil.js"></script>		
+<script>
+	checkPhoneNotExist("phonetxt",function(){});	
+	$("#bmantype").change(function() {
+		var btype = $("#bmantype").val();
+		if (btype == "部长") {
+			$("#spper").hide();
+			$(".namekeyword").hide();
+			$(".phonelist").hide();		
+			} else {
+			$("#spper").show();
+			$(".namekeyword").show();
+			$(".phonelist").show();
+		}
+	})			
+	$("#upper_phone").on("focus", function() {
+		$("#submitbtn").attr("disabled", true);
+	});
+	var checkphone = function(phone){
+		$.get("checkphone", {
+			phone : phone
+		}, function(data) {
+			if (data.errorMsg) {
+				alert(data.errorMsg);
+				$("#upper_phone").val("");
+				$("#uppertitle").text("输入部长手机号码");
+			} else {
+				$("#upper_id").val(data.id);
+				$("#upper_id").attr("disabled", false);
+				$("#uppertitle").text("部长："+data.name);
+			}
+				$("#submitbtn").attr("disabled", false);
+			
+		});
+	}
+	$("#upper_phone").on("blur", function() {
+		var phone = $(this).val();
+		checkphone(phone);
+	})
+	//选择号码
+	var selectphone = function(obj){
+		var phone = $(obj).find(".phone").text();
+		$("#upper_phone").val(phone);
+		checkphone(phone);
+	}
+	$("#name_key").bind("input propertychange",function(){
+			if($("#name_key").val()==""){
+				return;
+			}
+			$.ajax({
+			url:"findbman",
+			dataType:"json",
+			data:{namekey:$(this).val()},
+			success:function(data){
+				console.log(data);
+				var aphtml ="";
+				for(k in data){
+					var name = data[k]["name"];
+					var phone = data[k]["phone"];
+					aphtml += '<li onclick="selectphone(this)"><a class="phone" >'+phone+'</a><span>('+name+')</span></li>';
+				}
+				$("#phone_choose").html("");
+				$("#phone_choose").append(aphtml)
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		
+			}) 
+	});
+</script>
+
+<#include "bottom.html">
+

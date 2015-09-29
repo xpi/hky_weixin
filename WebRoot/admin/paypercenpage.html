@@ -1,0 +1,34 @@
+<#include "top.html">
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li><a href="billpercen">提成记录</a></li>
+	<li class="active">发放提成</li>
+	</li>
+</ol>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">发放详情</div>
+
+	<div class="panel-body">
+		<form action="confirmpercen" method="post">
+		<label>收款详细信息</label><br><input type="text" name = "record_id" value="${id}" hidden	>
+		接收提成人：${bman_name}  <br> 签单人：${sbman_name} <br> 提成类型：<strong>${relation}</strong> <br> 签单日期：${sign_date}<br><br>
+		奖金：<input type="text" name="percen" value="${percen}"><br><br>
+		收款账户类型：<input type="text" name="account_type" value="${account_type}">&nbsp
+		账户号码：<input type="text" name="account_num" value="${account_num}"><br><br>
+		备注:<br>
+		<textarea name="record_comment" cols="60"></textarea>
+		<br><br>
+		<input type="text" name="bill_id" value="${bill_id!}" hidden>
+		<input type="submit" value="提交">
+		</form><br>
+	</div>
+</div>
+
+
+<script>
+	
+</script>
+
+
+<#include "bottom.html">

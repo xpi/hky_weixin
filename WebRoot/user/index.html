@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My App</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../css/app.min.css">
+<link rel="stylesheet" href="../css/main.css">
+<style>
+/* TODO */
+</style>
+</head>
+
+<body>
+	<div class="app-page" data-page="home">
+		<div class="app-topbar 	red">
+			<div class="app-title">激活帐号</div>
+		</div>
+		<div class="app-content ">
+
+			<div class="app-section">
+				<form action="bind" method="post" id="bindphone">
+					<input class="app-input" type="text" name="enter_code"
+						placeholder="请输入邀请码"> <input type="submit"
+						class="app-button green" value="绑定">
+				</form>
+			</div>
+			<p class="app-section">请输入您在第一次登记的手机号码</p>
+		</div>
+	</div>
+
+
+
+
+	<script src="../js/zepto.js"></script>
+	<script src="../js/app.min.js"></script>
+	<script>
+		
+		try {
+			App.restore();
+		} catch (err) {
+			App.load('home');
+		}
+		$("#bindphone").submit(function(data) {
+			var enter_code = ($($(this).find("input[name=enter_code]")[0]).val());
+			$.ajax({type:"post",url:"bind",dataType:"json",data:{enter_code:enter_code},success:function(data){
+				App.dialog({
+ 				 title        : '提示',
+ 				 text         : data.resultMsg,
+ 				 okButton     : '确认',
+ 				 cancelButton : '取消'
+				},
+				function (event) {
+					if(event){
+						window.location.href="home";
+					}
+				});
+			}	
+			})
+			return false;
+		});
+	</script>
+</body>
+</html>

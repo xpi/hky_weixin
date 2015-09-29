@@ -1,0 +1,38 @@
+<#include "top.html">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a>
+	</li>
+	<li><a href="#">成员查看</a>
+	</li>
+	<li class="active">姓名查询</li>
+	</li>
+</ol>
+
+
+<div class="col-md-12 col-sm-12 margin-bottom-30">
+	<div class="panel panel-primary">
+		<div class="panel-heading">搜索</div>
+		<div class="panel-body">
+			<form role="form" id="templatemo-preferences-form" action="">
+				<div class="col-md-6 margin-bottom-15">
+					<label for="firstName" class="control-label">姓名关键字</label> <input
+						type="text" class="form-control" name="namekey">
+					<div class="row  margin-top-20">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary">搜索</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<#include "mstable.html">
+		</div>
+	</div>
+</div>
+<script src="js/tablesort.min.js"></script>
+<script>
+</script>
+
+<#include "bottom.html">
+

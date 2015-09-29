@@ -1,0 +1,82 @@
+<#include "top.html">
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li class="active">管理员设置</li>
+	</li>
+</ol>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">添加管理员</div>
+
+	<div class="panel-body">
+		<form action="addadmin" method="post">
+
+			帐号：<input type="text" name="admin_user"required> 密码：<input
+				type="text" name="admin_pwd" required> <input type="submit"
+				value="添加"> <h2>${errorMsg?if_exists}${successMsg?if_exists}</h2>
+		</form>
+		<br>
+		<form action="changeadminpwd" method="post">
+			更改当前密码:<br>
+			<input name="oldpwd" type="password" placeholder="请输入当前密码"  >
+			<input name="newpwd" type="password" placeholder="请输入新密码"  >
+		 <input type="submit"
+				value="修改">
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">管理员列表</div>
+	<div class="panel-body">
+		<table class="table table-striped table-hover table-bordered sort"
+			id="sort">
+			<thead>
+				<tr>
+					<th>帐号</th>
+					<th>登录状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="members">
+				<tr class="member">
+					<td><a class="admin_user"></a>
+					</td>
+					<td><a class="login_cookie"></a>
+					</td>
+					<td class="func"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script src="js/tablesort.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+	new Tablesort(document.getElementById("sort"), {
+		descending : false
+	});
+	
+	bindJsonToDom("#members", ".member", ${members},function(attr,obj,row){
+	if(attr=="admin_user"){
+		row.find(".func").append("<a class='delfunc' href='deladmin?admin_user="+obj["admin_user"]+"'>删除<a>")
+		
+	}
+	});
+	$(".delfunc").on("click",function(){
+	
+	
+		var cf = confirm("确认删除");
+		
+		if(cf){
+		return true;
+		}else{
+		return false;
+		}
+	})
+</script>
+<script>
+	
+</script>
+
+<#include "bottom.html">

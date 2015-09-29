@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../css/app.min.css">
+<link rel="stylesheet" href="../css/main.css">
+<link href="css/showLoading.css" rel="stylesheet" media="screen" />
+<link href="css/zepto.mdater.css" rel="stylesheet" media="screen" />
+<link href="css/font-awesome.min.css" rel="stylesheet" media="screen" />
+<style>
+/* TODO */
+</style>
+</head>
+
+<body>
+	<div class="app-page" data-page="home" id="home">
+		<div class="app-topbar 	red">
+			<div class="app-title">${bman_name}的主页</div>
+			<div class="app-button right">
+				<i class="fa fa-user"></i>
+			</div>
+		</div>
+
+		<div class="app-content">
+			<ul class="app-list">
+				<li class="app-button" data-target="teams-page"><i
+					class="fa fa-users"></i>我的团队</li>
+				<li class="app-button" data-target="achiv-page"><i
+					class="fa fa-bookmark"></i>团队业绩</li>
+				<li class="app-button" data-target="percen-page"><i
+					class="fa fa-dollar"></i>我的提成</li>
+				<li class="app-button" data-target="mypercen-page"><i
+					class="fa fa-dollar"></i>~我的提成</li>
+				<li class="app-button" data-target="tops-page"><i
+					class="fa fa-level-up"></i>排名情况</li>
+				<li class="app-button" data-target="news-page"><i
+					class="fa fa-bell"></i>最新政策</li>
+				<li class="app-button" data-target="newsdetailsfixed-page"><i
+					class="fa fa-asterisk"></i>方案信息</li>
+				<li class="app-button" data-target="message-page"><i
+					class="fa fa-asterisk"></i>我的消息<span
+					style="background:red;color:#fff;font-weight:bold;border-radius:10px;padding:2px 8px 2px 8px;">${unread}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+
+	<div class="app-page" data-page="teams-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">我的团队</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content">
+			<ul class="teams app-list">
+				<details class="bmanitems">
+					<summary class="app-button" style="border-bottom:1px solid #eee">
+						<span class="bname"></span> (<span class="dcount "></span>)
+					</summary>
+					<ul class="app-list">
+						<li>手机：<span class=phone></span>
+						</li>
+						<li>微信名：<span class="wname"></span>
+						</li>
+						<li>加入时间：<span class="ctime"></span>
+						<li id="fendian" class="app-button">分店(<span class="dcount"></span>)</li>
+					</ul>
+				</details>
+			</ul>
+		</div>
+	</div>
+
+
+
+	<div class="app-page" data-page="teamsinner">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">
+				<span class="uppername"></span>团队
+			</div>
+			<div class="app-button right" data-target="home">主页</div>
+
+		</div>
+		<div class="app-content">
+			<div class="teams app-list">
+				<details class="bmanitems">
+					<summary class="bname app-button"></summary>
+					<ul class="app-list">
+						<li>手机：<span class=phone></span>
+						</li>
+						<li>微信名：<span class="wname"></span>
+						</li>
+						<li>加入时间：<span class="ctime"></span>
+						</li>
+					</ul>
+				</details>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="app-page achiv-page" data-page="achiv-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">团队业绩</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content">
+			<div class="app-section">
+				<input class="app-input" value="${current_ym}" id="from-date"
+					type="text" placeholder="自定义请选择统计年月(默认本月)" readonly>
+			</div>
+			<div class="app-section">
+				<ul class="app-list" id="bill_list">
+					<label class="tit"></label>
+					<div class="box">
+						<table>
+							<tr>
+								<td>2万以下</td>
+								<td>2-5万</td>
+								<td>5万以上</td>
+							</tr>
+							<tr>
+								<td><span class="r1"></span>
+								</td>
+								<td><span class="r2"></span>
+								</td>
+								<td><span class="r3"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><span class="t1"></span>
+								</td>
+								<td><span class="t2"></span>
+								</td>
+								<td><span class="t3"></span>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div id="all_bill" class="splilt"></div>
+					<div id="my_bill" class="splilt"></div>
+					<div id="other_bill" class="splilt"></div>
+					<ul class="app-list" id="nameslist"></ul>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="app-page" data-page="mypercen-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">提成状况</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="mypercen-page">
+
+			<ul class="app-list">
+				<li><a class="app-button" onclick="getpercens('getallpercens','所有提成')">所有提成：数量：<span
+						class="allpercencount"></span>&nbsp&nbsp总额：<span
+						class="allpercensum"></span> </a></li>
+				<li><a class="app-button"
+					onclick="getpercens('getselfpercens','个人签单提成')">个人签单提成：数量：<span
+						class="personalpercencount"></span>&nbsp&nbsp总额：<span
+						class="personalpercensum"></span> </a></li>
+				<li><a class="app-button" onclick="getpercens('getdirpercens','分部签单提成')">分部签单提成：数量：<span
+						class="dirpercencount"></span>&nbsp&nbsp总额：<span
+						class="dirpercensum"></span> </a></li>
+				<li><a class="app-button" onclick="getpercens('getextpercens','拓展签单提成')">拓展签单提成：数量：<span
+						class="extpercencount"></span>&nbsp&nbsp总额：<span
+						class="extpercensum"></span> </a></li>
+				<li><a class="app-button" onclick="getpercens('getoverpercens','加价签单提成')">加价签单提成：数量：<span
+						class="overpercencount"></span>&nbsp&nbsp总额：<span
+						class="overpercensum"></span> </a></li>
+			</ul>
+
+		</div>
+	</div>
+	<div class="app-page" data-page="percenlist-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title"></div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="mypercen-page" width="100%">
+			<div class="app-section">
+				<input value="${current_ym}" id="from-date"
+					type="text" placeholder="自定义请选择统计年月(默认本月)" readonly>
+			</div>
+
+			<div class="app-section">
+				<table>
+					<thead>
+						<tr>
+							<th>未发放</th>
+							<th>已发放</th>
+						</tr>
+					</thead>
+					<tr>
+						<td class="notpay"></td>
+						<td class="haspay"></td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<div class="app-page" data-page="billdetail-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">签单详情</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="billdetail-page" width="100%">
+			<table class="details">
+
+			</table>
+		</div>
+	</div>
+	<div class="app-page" data-page="percen-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">提成状况</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="percen-page">
+			<div class="app-section">
+				<ul>
+					<li><input class="" value="${current_ym}" id="from-date"
+						type="text" placeholder="自定义请选择统计年月(默认本月)" readonly></li>
+					<table class="percentype">
+						<tr>
+							<td class="app-button" id="mypercen">个人佣金</td>
+							<td class="app-button" id="bpercen">分部佣金</td>
+							<td class="app-button" id="bbpercen">拓展佣金</td>
+						</tr>
+					</table>
+
+				</ul>
+			</div>
+			<div class="app-section">
+				<ul class="">
+					<label class="app-button red">2万以下</label>
+					<br>
+					<li class="c1" hidden></li>
+					<label class="app-button red">2~5万</label>
+					<br>
+					<li class="c2" hidden></li>
+					<label class="app-button red">5万以上</label>
+					<br>
+					<li class="c3" hidden></li>
+
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	<div class="app-page" data-page="tops-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">${current_y}排名状况</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="percen-page">
+			<div class="app-section">
+				<table class="toptype">
+					<tr>
+						<td class="app-button" id="percentop">奖金实力榜</td>
+						<td class="app-button" id="billtop">签单实力榜</td>
+					</tr>
+				</table>
+			</div>
+			<div class="app-section">
+				<ul id="toplist" class="app-list">
+
+				</ul>
+
+			</div>
+		</div>
+	</div>
+	<div class="app-page" data-page="news-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">最新政策</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="">
+			<div class="app-section">
+				<ul class="app-list" id="newslist">
+					<li id="morenews" next="0" onclick="morenews(this,'listnews')">更多</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="app-page" data-page="message-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">我的消息</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content" id="">
+			<div class="app-section">
+				<ul class="app-list" id="newslist">
+					<li id="morenews" next="1" onclick="morenews(this,'listmessage')">更多</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="app-page" data-page="newsdetails-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">政策内容</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content">
+			<p class="app-section">
+				<span style="font-size:8px;" class="newsdate"></span>
+			</p>
+			<div class="app-section content"></div>
+		</div>
+	</div>
+	<div class="app-page" data-page="newsdetailsfixed-page">
+		<div class="app-topbar red">
+			<div class="app-button left" data-back data-autotitle></div>
+			<div class="app-title">消息内容</div>
+			<div class="app-button right" data-target="home">主页</div>
+		</div>
+		<div class="app-content">
+			<p class="app-section">
+				<span style="font-size:8px;" class="newsdate"></span>
+			</p>
+			<div class="app-section content"></div>
+		</div>
+	</div>
+	<script src="js/zepto.js"></script>
+	<script src="js/zepto.mdater.js"></script>
+	<script type="text/javascript" src="js/jquery.showLoading.js"></script>
+	<script src="../js/app.min.js"></script>
+	<script>
+	
+		App.controller('home', function(page) {
+			// put stuff here
+		});	
+		<#include "js/team.handler.js">	
+		<#include "js/earn.handler.js">	
+		<#include "js/percen.handler.js">	
+		<#include "js/tops.handler.js">	
+		<#include "js/news.handler.js">	
+		App.controller('mypercen-page',function(page){
+			//$('.app-content').showLoading();
+			$.ajax({
+			dataType:"json",
+			url:"bman/mypercen",
+			
+			success:function(data){
+				for(k in data){
+					$(page).find("."+k).append(data[k])
+				}
+			
+			},
+			error:function(data){
+			
+			}
+			
+			});
+		});
+		
+		
+		var getpercens = function(type,title){
+			App.load('percenlist-page',{type:type,title:title});
+		}
+		var showbilldetails = function(bill_id){
+			App.load('billdetail-page',{bill_id:bill_id});
+		}
+		//.percenlist getpercens
+		var loadpercenlist = function(page,year_month,type){
+			$.ajax({
+			dataType:"json",
+			url:"bman/"+type,
+			data:{year_month:year_month},
+			success:function(data){
+				$(page).find(".haspay").html("");
+				$(page).find(".notpay").html("");
+				for(i in data){
+				
+					var item = "<span class='percenitem'>"
+					item+="<p>单号：<a  onclick='showbilldetails("+data[i]["bill_id"]+")'>"+data[i]["bill_id"]+"</a></p>";
+					item+="<p>签单人："+data[i]["name"]+"</a></p>";
+					item+="<p>类型："+data[i]["percen_type"]+"</a></p>";
+					item+="<p>奖金："+data[i]["percen"]+"</p>";
+					item+="<p>"+data[i]["sign_date"]+"</p>";
+					item+="</span><br>"
+					console.log(data[i]["ispay"]);
+					if(data[i]["ispay"]){
+						$(page).find(".haspay").append(item);
+					}else{
+						$(page).find(".notpay").append(item);
+					}
+					
+				}
+			},
+			error:function(data){
+			
+			}
+			
+			});
+		}
+		App.controller('percenlist-page',function(page,args){
+			
+			$(page).find(".app-title").text(args["title"]);
+			
+			var i =$(page).find('#from-date').mdater({
+				minDate : new Date(),
+				outercontainer:$(page).find(".app-content"),
+				okcallback:function(){
+					var year_month = $(page).find('#from-date').val();
+					loadpercenlist(page,year_month,args["type"]);
+				}
+			});
+			
+			var year_month = $(page).find('#from-date').val();
+			loadpercenlist(page,year_month,args["type"]);
+		
+		});
+		App.controller('billdetail-page',function(page,data){
+			$.ajax({
+				dataType:"json",
+				url:"bman/getbillview",
+				data:{bill_id:data["bill_id"]},
+				success:function(rcord){
+					var details = rcord;
+					console.log(rcord);
+					for(k in details){
+						$(page).find(".details").append("<tr><td style='font-weight:bold;text-align:right'>"+k+"</td><td>"+details[k]+"</td><tr>");
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			
+			});
+		
+		});
+ 		App.load("${page?default('home')}");
+	
+		<#if page??>
+				App.addToStack(0, ['home']);
+		</#if>
+		/* $(".app-content").showLoading(
+			{	}
+		);
+		$(".loading-indicator").on("click",function(){
+			$('.app-content').hideLoading();
+		}) */
+	</script>
+</body>
+</html>

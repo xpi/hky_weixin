@@ -1,0 +1,43 @@
+<#include "top.html">
+
+<div class="row" style="background:#fff;margin-left:0px;margin-right:0px;">
+		<div class="panel panel-default">
+			<div class="panel-heading">${cyear}年签单额业绩月况(万元)</div>
+			<canvas id="templatemo-bar-chart" width="600px"> </canvas>
+		</div>
+</div>
+<script>
+	//
+	var tdata = ${tyear};
+	for(i in tdata){
+		tdata[i]=tdata[i]/10000;
+	}
+
+	
+	var lineChartData = {
+		labels : [ "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月",
+				"11月", "12月" ],
+		datasets : [ {
+			label : "My First dataset",
+			fillColor : "rgba(220,220,220,0)",
+			strokeColor : "blue",
+			pointColor : "#eee",
+			pointStrokeColor : "red",
+			pointHighlightFill : "orange",
+			pointHighlightStroke : "red",
+			data : tdata
+		} ]
+
+	}
+	window.onload = function() {
+		// lineChartData
+		var ctx_bar = document.getElementById("templatemo-bar-chart")
+				.getContext("2d");
+	
+		window.myBar = new Chart(ctx_bar).Line(lineChartData, {
+			responsive : true,bezierCurveTension: 0
+		});
+	}
+</script>
+
+<#include "bottom.html">

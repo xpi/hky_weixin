@@ -1,0 +1,29 @@
+#实际环境数据库
+jdbcUrl = jdbc:mysql://localhost:3306/hukouyiweb?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = hukouyiweb
+password = hukouyiweb0997
+##测试数据库	
+testjdbcUrl = jdbc:mysql://localhost:3306/muti?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+testuser = root
+testpassword = root
+
+#是否开发模式
+devMode = true
+
+#开发是否开发环境
+
+devUrl = false
+
+# 信服务器回调所用的 token
+token=weixin
+
+# 测试用的账号
+appId=wx385e1fe5663a7814
+appSecret=507f2dd8699bdcecd8cd8b1bb0553ff6
+
+#是否对消息进行加密，是否对消息进行加密，对应于微信平台的消息加解密方式，false支持明文模式及兼容模式，true支持安全模式及兼容模式
+#encryptMessage=false
+#encodingAesKey=FaYU1qoKdA1I7S7vIlEjwBbAG9yknRKGN9TUji8YWBT
+
+
+

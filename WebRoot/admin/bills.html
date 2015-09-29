@@ -1,0 +1,104 @@
+<#include "top.html">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li class="active">签单管理</li>
+	</li>
+</ol>
+<div class="col-md-12 col-sm-12 margin-bottom-30">
+				<div class="panel panel-primary">
+				<div class="panel-heading">签单列表
+				<form action="bills" method="get" >
+					<input type="text" name="keyw"  style="color:black;border:1px solid #ddd" placeholder="关键字搜索"><input type="submit"  style="color:black;" value="搜索" >
+					<span>（签单姓名，客户，日期格式(xxxx-xx-xx)，单号）</span>
+				</form>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped table-hover table-bordered sort"
+						id="sort">
+						<thead>
+							<tr>
+								<th>单据骗号</th>
+								<th>金额</th>
+								<th>经办人</th>
+								<th>客户姓名</th>
+								<th>签单时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="members">
+							<tr class="member">
+								<td><a class="id" href="#"></a>
+								</td>
+								<td class="count"></td>
+								<td class="bman_name"></td>
+								<td class="client_name"></td>
+								<td class="sign_date"></td>
+								<td class="func"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<script src="js/tablesort.min.js"></script>
+
+			<script>
+				new Tablesort(document.getElementById("sort"), {
+					descending : false
+				});
+			</script>
+			<ul class="pagination pull-left">
+				<li id="pagepre"><a
+					href="?from=${pre}&keyw=${keyw!}"><</a>
+				</li>
+				<li id="pagepre"><a href=>第${currentpage}页</a>
+				</li>
+				<li id="pagenext"><a
+					href="?from=${next}&keyw=${keyw!}">></a>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</div>
+
+<script src="js/main.js"></script>
+
+
+<script>
+	
+	var current = 0;
+	
+	
+	bindJsonToDom("#members", ".member", ${members},function(attr,obj,row){
+				
+				row.find(".id").attr("href","showrecorddetails?table_name=mt_bill_view&id="+obj["id"]+"&page_name=签单查看&page=bills");
+				
+				if(attr==="ispay"){
+				
+					if(obj[attr]==0){
+						row.addClass("success");
+						row.find(".func").append("<a href='billpercen?bill_id="+obj["id"]+"'class=''>发放提成</a>")
+					}else{
+						row.find(".func").append("全部发放完成");
+					}
+					row.find(".func").append(" | <a href='delbill?bill_id="+obj["id"]+"' onclick='return reconfirm()'>删除</a>")
+					
+				}
+					
+	});
+		
+	
+	if($("#members").children().length<15){
+		$("#members").after("<tr><td style='text-align:center;color:#666' colspan='7'>最后一页</td></tr>");
+		$("#pagenext").remove();
+	}
+	
+	
+
+
+</script>
+
+<#include "bottom.html">
+

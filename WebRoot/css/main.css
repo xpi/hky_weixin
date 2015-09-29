@@ -1,0 +1,162 @@
+ul{
+	text-decoration: none;
+	list-style:none;
+}
+
+.app-section{
+	word-wrap: break-word;
+}
+a{
+	text-decoration: none;
+}
+#home li{
+	
+	text-align: center;
+}
+#home .fa{
+	padding: 10px;
+	font-size: 1em;
+}
+#bindphone .app-button {
+	margin: 8px 0 0;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	font-size: 1em;
+}
+
+details summary::-webkit-details-marker {
+	display: none;
+}
+table{
+	width:100%;
+	text-align:center;
+}
+table td{
+	padding:5px;
+}
+.loading-indicator-bars {
+	background-image: url('images/loading-bars.gif');
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+.achiv-page .tit{
+	background:red;
+	text-align: center;
+	width:100%;
+	padding:3px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color:#fff;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.achiv-page .splilt{
+	margin-bottom: 10px;
+}
+
+.achiv-page  table{
+	margin-top:3px;
+	border: 1px solid #eee;
+	border-collapse: collapse;
+}
+
+.achiv-page  table td,#mypercen-page table td{
+	border: 1px solid #eee;
+}
+li.unpaycolor{
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background:#ff5999;color:#fff;font-weight: bold;
+	border-bottom: 2px solid #666;
+}
+li.paycolor{
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background:#dedede;color:#000;font-weight: bold;
+	border-bottom: 2px solid #666;
+}
+#from-date{
+		border-radius: 4px;
+		border:1px solid #eee;
+		width:100%;
+		margin-bottom:5px;
+		vertical-align:middle;
+		text-align: center;
+		height: 2em;
+		font-size: 1.5em;
+}
+#percen-page .percentype{
+	text-align: center;
+	width: 100%;
+}
+#percen-page li{
+	padding:5px;
+	border-bottom: 1px solid #eee;
+
+	
+}
+#percen-page .app-button{
+	background:#de4100;
+	text-align: center;
+	padding:3px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color:#fff;
+	font-size: 1em;
+	font-weight: bold;
+	
+}
+.app-button{
+	font-size:0.9em;
+}
+.appendli{
+	font-size:0.8em;
+	color:#666;
+}
+#nameslist li{
+	text-align: center;
+	
+}
+#mypercen-page table,#billdetail-page table{
+	border-collapse: collapse;
+}
+#mypercen-page td,#mypercen-page th,#billdetail-page .details td{
+	text-align: left;
+	vertical-align: top;
+	border: 1px solid #eee;
+}
+
+#mypercen-page td a{
+	color:#17B;
+}
+
+#mypercen-page th{
+	background: #de4111;
+	color:#fff;
+	border: 1px solid #eee;
+	
+}
+#mypercen-page .percenitem {
+	border-bottom: 1px solid #666;
+}
+#mypercen-page  p{
+	font-size:12px;
+	color:#666;
+}
+#billdetail-page .details{
+	background:#fff;
+}
+/* details{
+}
+
+#bmantree details{
+  box-shadow:3px 3px 3px rgba(100,100,100,.6);
+  -moz-box-shadow:3px 3px 3px rgba(100,100,100,.6);
+  -webkit-box-shadow:3px 3px 3px rgba(100,100,100,.6);
+} */

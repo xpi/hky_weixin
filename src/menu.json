@@ -1,0 +1,69 @@
+{
+    "button": [
+        {
+            "name": "公共信息", 
+            "sub_button": [
+                {
+                    "type": "view", 
+                    "name": "提成方案", 
+					"url": "http://www.hukouyi.com/weixin/user/news?page=newsdetailsfixed-page&news_id=1438578783579"
+				}, 
+                 {
+                    "type": "view", 
+                    "name": "产品目录", 
+					"url": "http://www.hukouyi.com/weixin/user/news?page=newsdetailsfixed-page&news_id=1438578707783"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "排名状况", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=tops-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "公司简介", 
+					"url": "http://www.hukouyi.com/weixin/user/news?page=newsdetailsfixed-page&news_id=1438578847658"
+                },                    
+                {
+                    "type": "view", 
+                    "name": "最新资讯", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/news&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"                
+				}
+            ]
+        }, 
+        {
+                    "type": "view", 
+                    "name": "我的团队", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=teams-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"                
+		},
+        {
+            "name": "我的提成", 
+            "sub_button": [
+                {
+                    "type": "view", 
+                    "name": "提成总数", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=mypercen-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "分部提成", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=mypercen-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "拓展提成", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=mypercen-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "查看提成", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=percen-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "查看业绩", 
+					"url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx385e1fe5663a7814&redirect_uri=http://www.hukouyi.com/weixin/user/home?page=achiv-page&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+                }
+            ]
+         }
+      ]
+}

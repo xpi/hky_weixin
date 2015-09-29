@@ -1,0 +1,60 @@
+<#include "top.html">
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a>
+	</li>
+	<li><a href="#">成员查看</a>
+	</li>
+	<li class="active">属性图</li>
+	</li>
+</ol>
+<div class="panel panel-primary">
+		<div class="panel-heading">分销商金字塔属性图</div>
+		<div class="panel-body">
+			<div id="bmantree"></div>
+		</div>
+</div>
+
+<script>
+function oppositeColor(a){
+    a=a.replace('#','');
+    var c16,c10,max16=15,b=[];
+    for(var i=0;i<a.length;i++){   
+        c16=parseInt(a.charAt(i),16);//  to 16进制
+        c10=parseInt(max16-c16,10);// 10进制计算
+        b.push(c10.toString(16)); // to 16进制
+    }
+    return '#'+b.join('');
+}
+
+var getRandomColor = function(){
+  return '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).substr(-6); 
+  // return '#'+Math.floor(Math.random()*16777215).toString(16); 
+  
+}
+
+	var base=15;
+
+	$.get("memberstree",{},function(data){
+		for(var i in data){
+		console.log(data[i]);
+			$("#bmantree").append("<details onclick='f(this,"+data[i].id+")' style='background:#fff'><summary><a  href='bmaninfo?bman_id="+data[i].id+"'>"+data[i].name+"</a>("+data[i].mcount+"人)</summary></details>")
+		}
+	});
+
+	var f = function(obj,bman_id){
+		var rcolor="#fff"
+	
+		$.get("memberstree",{bman_id,bman_id},function(data){
+			for(var i in data){
+				var style = "margin-left:15px;"+"background:"+rcolor+";";
+				$(obj).append("<details  onclick='f(this,"+data[i].id+")' style='"+style+"'><summary><a  href='bmaninfo?bman_id="+data[i].id+"'>"+data[i].name+"</a>("+data[i].mcount+"人)</summary></details>");
+				obj.onclick="";
+			}
+		})
+
+	} 
+	
+</script>
+
+<#include "bottom.html">
+

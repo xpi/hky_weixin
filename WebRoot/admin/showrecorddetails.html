@@ -1,0 +1,24 @@
+<#include "top.html">
+<ol class="breadcrumb">
+	<li><a href="index">分销系统后台管理</a></li>
+	<li><a href="${page}">${page_name}</a></li>
+	<li class="active">${id}</li>
+	</li>
+</ol>
+<div class="panel panel-primary">
+	<div class="panel-heading">${page_name}${id}详情</div>
+	<div class="panel-body">
+		<table id="details" class="table table-bordered">
+
+		</table>
+	</div>
+</div>
+<script>
+	var details = ${details};
+	console.log(details);
+	for(k in details){
+		$("#details").append("<tr><td style='font-weight:bold;text-align:right'>"+k+"</td><td>"+details[k]+"</td><tr>");
+	}
+</script>
+
+<#include "bottom.html">

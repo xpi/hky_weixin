@@ -1,0 +1,158 @@
+<#include "top.html">
+
+
+<ol class="breadcrumb">
+
+	<li><a href="members">成员</a></li>
+	<li class="active">${name}</li>
+</ol>
+
+
+<div class="panel panel-default">
+		<div class="panel-heading" style="padding:0px;font-size:18px"><strong>（${name}）个人信息</strong></div>
+		<div style="padding:6px;">
+		<form role="form" action="bmaninfoupdate"
+			id="templatemo-preferences-form">
+			<div class="row">
+				<input type="text" id="openid" name="openid"
+					value="${openid?default('')}" hidden> <input type="text"
+					id="oldphone" name="oldphone" value="${phone}" hidden> <input
+					type="text" id="bman_id" name="bman_id" value="${id}" hidden>
+				<div class="col-md-4 margin-bottom-15">
+					<label for="phone" class="control-label">手机</label> <input
+						type="text" class="form-control" id="phone" name="phone"
+						value="${phone}">
+				</div>
+				<div class="col-md-4 margin-bottom-15">
+					<label for="account_type" class="control-label">账户类型</label> <input
+						type="text" class="form-control" id="account_type"
+						name="account_type" value="${account_type}">
+				</div>
+				<div class="col-md-4 margin-bottom-15">
+					<label for="account_num" class="control-label">账户帐号</label> <input
+						type="text" class="form-control" id="account_num"
+						name="account_num" value="${account_num}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 margin-bottom-15">
+					<label>加入日期</label>
+					<p class="form-control-static" id="username">${create_date}</p>
+				</div>
+				<div class="col-md-2 margin-bottom-15">
+					<label>下属</label>
+					<p class="form-control-static" id="mcount">
+						<a href="getMembersById?bmanid=${id}">${mcount}人</a>
+					</p>
+				</div>
+				<div class="col-md-2 margin-bottom-15">
+					<label>等级</label>
+					<p class="form-control-static" id="rank">${rank}级</p>
+				</div>
+				<div class="col-md-2 margin-bottom-15">
+					<label>总单数</label>
+					<p class="form-control-static" id="bcount">
+						<a href="billpercen?bman_id=${id}">总：${bcount}单</a><br>
+						<a>个人：${personbill}单</a><br>
+						<a>分部：${bottombill}单</a><br>
+					</p>
+				</div>
+
+				<div class="col-md-2 margin-bottom-15">
+					<label>微信</label>
+					<p>微信准入码：${enter_code}</p>
+					<p class="form-control-static" id="wechat_name">名称：${wechat_name?default('未绑定')}</p>
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 margin-bottom-15">
+					<label>备注</label>
+					<div>
+						<textarea name="comments" cols="50" rows="5">${comments!}</textarea>
+					</div>
+				</div>
+				<div class="col-md-6 margin-bottom-15">
+				<label>其他</label>
+				<div>
+					<a class="btn" href="charts/personpercen?bman_id=${id}" target="chartbox">个人提成月况</a>
+					<a class="btn" href="charts/department?bman_id=${id}" target="chartbox">部门提成月况</a>
+				</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 margin-bottom-15">
+					<label>部长手机号：${sphone?if_exists}</label> <br> <span
+						class="form-control-static">
+						<div id="upperinfo">
+							<#if upper??>
+							<a class="upper_name" href="bmaninfo?bman_id=${upper?if_exists}">${sbman_name?default('')}</a>
+							<#else>
+							<span class="upper_name">已是部长</span>
+							</#if>
+							<span
+								class="sphone"><a class="btn">修改部长</a> </span>  <#if
+							upper??> <a class="btn " id="upto">成为部长</a> </#if> <input
+								type="text" id="upper_phone" value="${sphone?if_exists}" hidden
+								disabled  placeholder="请输入部长的手机号码">
+						</div> 
+						<input id="upper_id" type="text" name="upper_id"
+						value="${upper?if_exists}" disabled hidden >
+						<input id="uptoupper" type="text" name="uptoupper"
+						value="" disabled hidden >
+				</div>
+			</div>
+
+			<div class="row templatemo-form-buttons">
+				<div class="col-md-12">
+					<button type="submit" id="submitbtn" class="btn btn-primary">提交更新</button>
+				</div>
+			</div>
+		</form>
+		<iframe name="chartbox" src="" style="border:1px solid #fff;width:100%;height:500px"></iframe>
+		</div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+	$("#upto").click(function() {
+		$("#uptoupper").val("1");
+		$("#upperinfo").html("<a >提交后升级为部长</a>");
+		$("#uptoupper").attr("disabled", false);
+		
+	});
+	$(".sphone").click(function() {
+		$(".sphone").hide();
+		$("#upper_phone").show();
+		$("#upper_phone").attr("disabled", false);
+	})
+	$("#upper_phone").on("focus", function() {
+		$("#submitbtn").attr("disabled", true);
+	});
+	$("#upper_phone").on("blur", function() {
+	
+		var phone = $(this).val();
+		if (phone == "") {
+			
+			$("#submitbtn").attr("disabled", false);
+			return;
+		}
+		$.get("checkphone", {
+			phone : phone
+		}, function(data) {
+			
+			if (data.errorMsg) {
+				alert(data.errorMsg);
+			} else {
+				$("#upper_id").val(data.id);
+				$(".upper_name").text(data.name);
+				$("#upper_id").attr("disabled", false);
+			}
+			$("#submitbtn").attr("disabled", false);
+		});
+
+	})
+</script>
+
+<#include "bottom.html">
+
